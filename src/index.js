@@ -1,8 +1,5 @@
 require("dotenv").config();
-
 const { token } = process.env;
-
-
 const { Client, Collection, GatewayIntentBits, Partials, Events } = require("discord.js");
 const path = require("path")
 const fs = require("fs")
@@ -60,19 +57,7 @@ for (const file of functionFiles) {
 }
 
 
-
-
-client.once(Events.ClientReady, c => {
-    console.log(`Ready! Logged in as ${c.user.tag}`);
-
-
-    setTimeout(client.checkVideo(), 5 * 1000);
-
-});
-
 // Login to our client
-client.login(token)
-    .then(() => {
-
-    })
+client
+    .login(token)
     .catch(err => console.log(err));

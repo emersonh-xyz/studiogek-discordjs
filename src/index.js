@@ -18,6 +18,9 @@ const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
+const functionsPath = path.join(__dirname, 'functions');
+const functionFiles = fs.readdirSync(functionsPath).filter(file => file.endsWith('.js'))
+
 
 const client = new Client({
     intents: [Guilds, GuildMembers, GuildMessages],
@@ -51,8 +54,20 @@ for (const file of eventFiles) {
     }
 }
 
+// Filter each file in our functions directory
+for (const file of functionFiles) {
+    require(`./functions/${file}`)(client)
+}
+
+
+
+
 client.once(Events.ClientReady, c => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
+
+
+    setTimeout(client.checkVideo(), 5 * 1000);
+
 });
 
 // Login to our client

@@ -9,7 +9,7 @@ module.exports = (client) => {
         );
     }
 
-    const rawData = fs.readdirSync(`${__dirname}/../../json/video.json`)
+    const rawData = fs.readdirSync(`${__dirname}../json/video.json`)
 
     console.log(rawData, data);
 

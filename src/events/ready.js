@@ -7,10 +7,14 @@ module.exports = {
     async execute(client) {
 
         console.log(`${client.user.tag} is now ready`)
+
         client.user.setPresence({ activities: [{ name: 'Attack on Titan', type: ActivityType.Watching }], status: 'online' });
 
+        // Check for a new video on start-up
+        client.checkVideo()
+
         // Check for new videos every set interval
-        setInterval(client.checkVideo, 30000);
+        setInterval(client.checkVideo, 600000);
 
 
     }

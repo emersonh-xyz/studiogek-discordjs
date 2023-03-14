@@ -1,3 +1,5 @@
+const { ActivityType } = require("discord.js")
+
 module.exports = {
     name: "ready",
     once: true,
@@ -5,9 +7,11 @@ module.exports = {
     async execute(client) {
 
         console.log(`${client.user.tag} is now ready`)
+        client.user.setPresence({ activities: [{ name: 'Attack on Titan', type: ActivityType.Watching }], status: 'online' });
 
-        // Create a timer of 5 minutes to check for new 
-        setTimeout(client.checkVideo, 300000);
+        // Check for new videos every set interval
+        setInterval(client.checkVideo, 30000);
+
 
     }
 }

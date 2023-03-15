@@ -65,11 +65,11 @@ module.exports = (client) => {
         if (jsonData.id !== data.items[0].id) {
 
 
-            // A new id was compared
-            console.log(`✅ | New video found ${title}`);
-
             // Get all of our properties from the object
             const { title, link, id, author } = data.items[0];
+
+            // A new id was compared
+            console.log(`✅ | New video found ${title}`);
 
             // Look up the show title
             let show = checkShowTitle(title);

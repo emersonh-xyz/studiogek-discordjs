@@ -111,9 +111,9 @@ module.exports = (client) => {
 
             // If we have a role then send it in the message, otherwise don't
             if (show.role) {
-                await uploadChannel.send(`New upload! <@&${show.role}> \n\n**${title}** \n${link}`);
+                await uploadChannel.send(`<@&${show.role}> \n**${title}** \n\n${link}`);
             } else {
-                await uploadChannel.send(`New upload! \n\n**${title}** \n${link}`);
+                await uploadChannel.send(`New upload! \n\n**${title}** \n\n${link}`);
             }
 
 

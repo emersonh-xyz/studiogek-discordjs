@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config({ path: "../.env" });
 
 const { REST, Routes } = require('discord.js');
 const { clientId, guildId, token } = process.env;
@@ -22,6 +22,8 @@ const rest = new REST({ version: '10' }).setToken(token);
 
 // and deploy your commands!
 (async () => {
+
+
     try {
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
 

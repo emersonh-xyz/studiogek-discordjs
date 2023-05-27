@@ -53,21 +53,7 @@ module.exports = (client) => {
             // Look up the show title
             let show = checkShowTitle(title);
 
-            // Create a new Embed for logs
-            // const logsEmbed = new EmbedBuilder()
-            //     .setColor(0xFFFFFF)
-            //     .setTitle('Gek Logs')
-            //     .setDescription("New YouTube Video")
-            //     .setThumbnail('https://cdn3.iconfinder.com/data/icons/social-network-30/512/social-06-512.png')
-            //     .addFields(
-            //         { name: '**Title**', value: `${title}`, inline: false },
-            //         { name: '**Show**', value: `${show?.name}`, inline: false },
-            //         { name: '**Channel**', value: '<#1084327119259193344>', inline: false },
 
-            //     )
-            //     .setTimestamp();
-
-            // Fetch the guild id
             const guild = await client.guilds
                 .cache.get(guildId);
 
@@ -75,21 +61,14 @@ module.exports = (client) => {
             const uploadChannel = await guild.channels
                 .fetch("1084327119259193344");
 
-            // Fetch the logs channel
-            // const logs = await guild.channels
-            //     .fetch("1084318629841088522");
 
-            // Send a log 
-            // await logs.send({ embeds: [logsEmbed] });
-
-            // Update video.json with the new ID
             fs.writeFileSync(`${__dirname}/../json/video.json`, JSON.stringify({ id: data.items[0].id }));
 
             // If we have a role then send it in the message, otherwise dont
             if (show?.role) {
-                await uploadChannel.send(`<@&${show.role}> \n\n**${title}** \n\n${link}`);
+                await uploadChannel.send(`<@&1101953064862240840> <@&${show.role}> \n\n**${title}** \n\n${link}`);
             } else {
-                await uploadChannel.send(`New upload! \n\n**${title}** \n\n${link}`);
+                await uploadChannel.send(`<@&1101953064862240840> New upload! \n\n**${title}** \n\n${link}`);
             }
 
         } else {

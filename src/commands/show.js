@@ -25,6 +25,7 @@ module.exports = {
 
         if (interaction.user.id !== "117506271715917829") {
             await interaction.reply({ content: "Nice try buddy 😼", ephemeral: true })
+            return;
         }
 
         const role = interaction.options.getRole('role');

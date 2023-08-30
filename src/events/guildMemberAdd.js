@@ -31,17 +31,15 @@ module.exports = {
 
         const gif = gifArray[Math.floor(Math.random() * gifArray.length)];
 
-        console.log(member)
-
         const welcomeEmbed = new EmbedBuilder()
             .setAuthor({ name: `${user.username}`, iconURL: `${user.displayAvatarURL()}` })
             .setImage(gif)
-            .setTitle(`**Welcome to Studio Gek, ${user.username}**`)
+            .setTitle(`**Welcome to Studio Gek, <@${member.id}>**`)
             .setColor(0xE74C4C)
             .setDescription("- View our rules in <#1084315963232628776>\n- Get your roles in <#1086118916557897779>")
             .setFooter({ text: `you are our ${memberCount} member!` })
             .setTimestamp();
 
-        welcomeChannel.send({ embeds: [welcomeEmbed] })
+        welcomeChannel.send(welcomeMessage)
     }
 }

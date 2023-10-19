@@ -14,8 +14,8 @@ module.exports = {
         const welcomeChannel = member.guild.channels.cache.get('1084317814405484545');
         const logsChannel = member.guild.channels.cache.get(logsId);
 
-        const welcomeMessage = `Welcome <@${member.id}> to the Discord Server!`
         const memberCount = moment.localeData().ordinal(guild.memberCount);
+        const welcomeMessage = `Welcome <@${member.id}> #*(__${memberCount}__)* to the server!`
 
         const gifArray = [
             "https://media1.giphy.com/media/3o7bugwhhJE9WhxkYw/giphy.gif",

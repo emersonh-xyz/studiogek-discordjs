@@ -1,12 +1,12 @@
 require("dotenv").config();
-const { token } = process.env;
+const { token, guildId } = process.env;
 const { Client, Collection, GatewayIntentBits, Partials, Events } = require("discord.js");
 const path = require("path")
 const fs = require("fs")
 
 // Load our Discord Intents
-const { Guilds, GuildMembers, GuildMessages } = GatewayIntentBits;
-const { User, Message, GuildMember, ThreadMember } = Partials;
+const { Guilds, GuildMembers, GuildMessages, GuildMessageReactions, MessageContent } = GatewayIntentBits;
+const { User, Message, GuildMember, ThreadMember, Channel, Reaction } = Partials;
 
 // Locate our commands path
 const commandsPath = path.join(__dirname, 'commands');
@@ -20,8 +20,8 @@ const functionFiles = fs.readdirSync(functionsPath).filter(file => file.endsWith
 
 
 const client = new Client({
-    intents: [Guilds, GuildMembers, GuildMessages],
-    partials: [User, Message, GuildMember, ThreadMember]
+    intents: [Guilds, GuildMembers, GuildMessages, GuildMessageReactions, MessageContent],
+    partials: [User, Message, GuildMember, ThreadMember, Channel, Reaction]
 });
 
 // Create a new commands collection
@@ -44,6 +44,7 @@ for (const file of commandFiles) {
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
     const event = require(filePath);
+    console.log(event);
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args));
     } else {

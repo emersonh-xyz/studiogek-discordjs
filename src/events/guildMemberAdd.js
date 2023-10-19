@@ -8,7 +8,6 @@ const { logsId } = process.env;
 module.exports = {
     name: "guildMemberAdd",
 
-
     execute(member) {
         const { user, guild } = member;
 

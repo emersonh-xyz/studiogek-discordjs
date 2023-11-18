@@ -8,7 +8,7 @@ module.exports = {
 
         console.log(`${client.user.tag} is now ready`)
 
-        client.user.setPresence({ activities: [{ name: 'Happy Gektober 🎃', type: ActivityType.Playing }], status: 'online' });
+        client.user.setPresence({ activities: [{ name: 'beep boop bop', type: ActivityType.Listening }], status: 'online' });
 
         // Check for a new video on start-up
         client.checkVideo()

@@ -44,12 +44,12 @@ for (const file of commandFiles) {
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
     const event = require(filePath);
-    console.log(event);
-    if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args));
-    } else {
-        client.on(event.name, (...args) => event.execute(...args));
-    }
+    // console.log(event);
+    // if (event.once) {
+    //     client.once(event.name, (...args) => event.execute(...args));
+    // } else {
+    client.on(event.name, (...args) => event.execute(...args));
+    // }
 }
 
 // Filter each file in our functions directory

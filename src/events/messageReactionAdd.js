@@ -10,6 +10,7 @@ module.exports = {
         const channelId = "1164556619628171366";
         const guild = await reaction.client.guilds.cache.get(guildId);
         const channel = await guild.channels.fetch(channelId)
+        const currentMonth = new Date().getMonth();
 
         let send = true;
         let embedColor;
@@ -42,6 +43,13 @@ module.exports = {
 
         }
 
+        let month = new Date(reaction.message.createdTimestamp).getMonth();
+
+        if (currentMonth !== month) {
+            console.log('here')
+            return;
+        }
+
         if (reaction._emoji.name === "💀" && reaction.count >= 8) {
             await channel.messages.fetch({ limit: 100 }).then(messages => {
                 messages.forEach(message => {
@@ -70,7 +78,6 @@ module.exports = {
                 .setFooter({ text: reaction.message.id });
 
             if (send) {
-                // channel.send("\`Sending fresh embed\`")
                 channel.send({ embeds: [embed] })
             }
 

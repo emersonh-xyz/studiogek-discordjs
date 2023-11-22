@@ -50,7 +50,7 @@ module.exports = {
             return;
         }
 
-        if (reaction._emoji.name === "💀" && reaction.count >= 5) {
+        if (reaction._emoji.name === "💀" && reaction.count >= 8 && reaction.message.channelId != channelId) {
             await channel.messages.fetch({ limit: 100 }).then(messages => {
                 messages.forEach(message => {
                     if (reaction.message.id === message.embeds[0]?.data?.footer?.text) {

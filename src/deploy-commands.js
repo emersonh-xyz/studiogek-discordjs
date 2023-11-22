@@ -18,17 +18,18 @@ for (const file of commandFiles) {
 }
 
 // Construct and prepare an instance of the REST module
-const rest = new REST({ version: '10' }).setToken("MTA4NDgzMDM4NDMzMzc5MTI4Mg.Go2U9F.naKPH5qoGgmAHhdcRIUWZv5_86ohttGOj2V2tQ");
+const rest = new REST({ version: '10' }).setToken(token);
 
 // and deploy your commands!
 (async () => {
+
 
     try {
         console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
         // The put method is used to fully refresh all commands in the guild with the current set
         const data = await rest.put(
-            Routes.applicationGuildCommands("1084830384333791282", "1084286090619392033"),
+            Routes.applicationGuildCommands(clientId, guildId),
             { body: commands },
         );
 

@@ -12,50 +12,71 @@ module.exports = {
     async execute(interaction) {
 
         const guild = await interaction.client.guilds.cache.get(guildId);
-        const channel = await guild.channels.fetch(channelId)
-
+        const channel = await guild.channels.cache.get(channelId)
         const leaderboard = new Map();
-
         const currentMonth = new Date().getMonth()
+
 
         const monthNames = [
             'January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'
         ];
 
+
+
+        // https://stackoverflow.com/questions/63322284/discord-js-get-an-array-of-all-messages-in-a-channel
+        let messages = [];
+
+        let message = await channel.messages
+            .fetch({ limit: 1 })
+            .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
+
+        while (message) {
+            await channel.messages
+                .fetch({ limit: 100, before: message.id })
+                .then(messagePage => {
+                    messagePage.forEach(msg => messages.push(msg));
+
+                    // Update our message pointer to be the last message on the page of messages
+                    message = 0 < messagePage.size ? messagePage.at(messagePage.size - 1) : null;
+                });
+        }
+
+        console.log(messages)
+
         // Fetch last one hundred messages
-        await channel.messages.fetch({ limit: 100 }).then((messages) => {
-            messages.map((message) => {
+        // await channel.messages.fetch({ limit: 100 }).then((messages) => {
+        messages.map((message) => {
 
-                let month = new Date(message.createdTimestamp).getMonth();
+            let month = new Date(message.createdTimestamp).getMonth();
 
-                if (month !== currentMonth) {
-                    // console.log(`skipping, ${month} does not match current month of ${currentMonth}`)
-                    return;
-                }
+            if (month !== currentMonth) {
+                // console.log(`skipping, ${month} does not match current month of ${currentMonth}`)
+                return;
+            }
 
-                if (message.embeds) {
-                    message.embeds.map((embed) => {
+            if (message.embeds) {
+                message.embeds.map((embed) => {
 
-                        let author = embed.data?.author?.name;
-                        let title = embed.data.title;
-                        let count = parseInt(title.replace(/💀/g, ""));
+                    let author = embed.data?.author?.name;
+                    let title = embed.data.title;
+                    let count = parseInt(title.replace(/💀/g, ""));
 
-                        // Author hasn't been added yet
-                        if (!leaderboard.has(author)) {
-                            leaderboard.set(author, { count: count });
-                            return;
-                        }
+                    // Author hasn't been added yet
+                    if (!leaderboard.has(author)) {
+                        leaderboard.set(author, { count: count });
+                        return;
+                    }
 
-                        let oldEntry = leaderboard.get(author);
-                        let newCount = oldEntry.count + count;
+                    let oldEntry = leaderboard.get(author);
+                    let newCount = oldEntry.count + count;
 
-                        leaderboard.set(author, { count: newCount })
+                    leaderboard.set(author, { count: newCount })
 
-                    })
-                }
-            })
+                })
+            }
         })
+        // })
 
         // Convert the map to an array of entries
         const entriesArray = Array.from(leaderboard.entries());

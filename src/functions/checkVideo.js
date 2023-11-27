@@ -37,7 +37,6 @@ module.exports = (client) => {
         const rawData = fs.readFileSync(`${__dirname}/../json/video.json`);
         const jsonData = JSON.parse(rawData);
 
-
         // Check if there is a new ID in the .JSON
         if (jsonData.id !== data.items[0].id) {
 

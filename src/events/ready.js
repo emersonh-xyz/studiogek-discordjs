@@ -8,14 +8,11 @@ module.exports = {
 
         console.log(`${client.user.tag} is now ready`)
 
-        client.user.setPresence({ activities: [{ name: '/skullboard | studiogek.com', type: ActivityType.Playing }], status: 'online' });
-
-        // Check for a new video on start-up
-        client.checkVideo()
+        client.user.setPresence({ activities: [{ name: '💀👑 explorer0123', type: ActivityType.Watching }], status: 'online' });
 
         // Check for new videos every set interval
         setInterval(client.checkVideo, 600000);
-
+        setInterval(client.sendSkulls, 86400000)
 
     }
 }

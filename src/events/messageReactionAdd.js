@@ -1,7 +1,38 @@
 const { Events } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
+const fs = require('fs');
+const skullCount = require('../json/skulls.json');
 
-const { guildId } = process.env
+const { guildId } = process.env;
+
+const increaseSkullCount = (user, userId, count) => {
+
+    const scoreboard = JSON.parse(fs.readFileSync(`${__dirname}/../json/skulls.json`));
+
+    for (let i = 0; i < scoreboard.length; i++) {
+        if (scoreboard[i].user === user) {
+            // logic for updating current users info
+            const newCount = scoreboard[i].count + count;
+            const payload = { user: user, userId: userId, count: newCount };
+
+            scoreboard[i] = payload;
+
+            fs.writeFileSync(`${__dirname}/../json/skulls.json`, JSON.stringify(scoreboard));
+
+            return;
+        }
+    }
+
+    // logic for adding a new user to the scoreboard
+    const payload = { user: user, userId: userId, count: count };
+
+    const updatedScoreboard = [...scoreboard, payload];
+
+    fs.writeFileSync(`${__dirname}/../json/skulls.json`, JSON.stringify(updatedScoreboard));
+
+    return;
+}
+
 
 module.exports = {
     name: Events.MessageReactionAdd,
@@ -50,7 +81,8 @@ module.exports = {
             return;
         }
 
-        if (reaction._emoji.name === "💀" && reaction.count >= 8 && reaction.message.channelId != channelId) {
+        // 
+        if (reaction._emoji.name === "💀" && reaction.count >= 7 && reaction.message.channelId != channelId) {
             await channel.messages.fetch({ limit: 100 }).then(messages => {
                 messages.forEach(message => {
                     if (reaction.message.id === message.embeds[0]?.data?.footer?.text) {
@@ -58,6 +90,8 @@ module.exports = {
                         const newEmbed = EmbedBuilder.from(message.embeds[0]).setTitle(title);
                         message.edit({ embeds: [newEmbed] })
                         send = false;
+
+                        increaseSkullCount(reaction.message.author.username, reaction.message.author.id, 1);
                         return
                     }
                 })
@@ -79,6 +113,7 @@ module.exports = {
 
             if (send) {
                 channel.send({ embeds: [embed] })
+                increaseSkullCount(reaction.message.author.username, reaction.message.author.id, reaction.count);
             }
 
         }

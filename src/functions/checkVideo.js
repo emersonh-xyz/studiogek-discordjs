@@ -9,7 +9,6 @@ const { guildId } = process.env
 
 module.exports = (client) => {
 
-
     function checkShowTitle(title) {
 
         // Loop through shows json and compare for a title match
@@ -20,7 +19,6 @@ module.exports = (client) => {
                 return show;
             }
         }
-
     }
 
     client.checkVideo = async () => {

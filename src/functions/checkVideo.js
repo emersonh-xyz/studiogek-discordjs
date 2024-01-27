@@ -5,8 +5,6 @@ const shows = require("../json/shows.json")
 
 require("dotenv").config();
 
-const { guildId } = process.env
-
 module.exports = (client) => {
 
     function checkShowTitle(title) {
@@ -47,11 +45,11 @@ module.exports = (client) => {
             let show = checkShowTitle(title);
 
             const guild = await client.guilds
-                .cache.get(guildId);
+                .cache.get(process.env.GUILD_ID);
 
             // Fetch the upload channel
             const uploadChannel = await guild.channels
-                .fetch("1084327119259193344");
+                .fetch(process.env.UPLOAD_CHANNEL_ID);
 
             fs.writeFileSync(`${__dirname}/../json/video.json`, JSON.stringify({ id: data.items[0].id }));
 

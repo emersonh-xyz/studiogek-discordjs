@@ -1,8 +1,6 @@
 const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
 
-const { guildId } = process.env
-const channelId = "1164556619628171366";
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,8 +9,8 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
     async execute(interaction) {
 
-        const guild = await interaction.client.guilds.cache.get(guildId);
-        const channel = await guild.channels.cache.get(channelId)
+        const guild = await interaction.client.guilds.cache.get(process.env.GUILD_ID);
+        const channel = await guild.channels.cache.get(process.env.SKULLBOARD_CHANNEL_ID);
         const leaderboard = new Map();
         const currentMonth = new Date().getMonth()
 

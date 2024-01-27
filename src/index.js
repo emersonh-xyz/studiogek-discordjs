@@ -1,5 +1,4 @@
 require("dotenv").config({ path: "./.env" });
-const { token, guildId } = process.env;
 const { Client, Collection, GatewayIntentBits, Partials, Events } = require("discord.js");
 const path = require("path")
 const fs = require("fs")
@@ -17,7 +16,6 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 
 const functionsPath = path.join(__dirname, 'functions');
 const functionFiles = fs.readdirSync(functionsPath).filter(file => file.endsWith('.js'))
-
 
 const client = new Client({
     intents: [Guilds, GuildMembers, GuildMessages, GuildMessageReactions, MessageContent],
@@ -53,12 +51,11 @@ for (const file of eventFiles) {
 }
 
 // Filter each file in our functions directory
-for (const file of functionFiles) {
-    require(`./functions/${file}`)(client)
-}
-
+require(`./functions/checkVideo.js`)(client)
+require(`./functions/sendSkulls.js`)(client)
+require(`./functions/increaseSkulls.js`)
 
 // Login to our client
 client
-    .login(token)
+    .login(process.env.BOT_TOKEN)
     .catch(err => console.log(err));

@@ -48,7 +48,7 @@ module.exports = {
         }
 
         // 
-        if (reaction._emoji.name === "💀" && reaction.count >= 2 && reaction.message.channelId != process.env.SKULLBOARD_CHANNEL_ID) {
+        if (reaction._emoji.name === "💀" && reaction.count >= 7 && reaction.message.channelId != process.env.SKULLBOARD_CHANNEL_ID) {
             await channel.messages.fetch({ limit: 100 }).then(messages => {
                 messages.forEach(message => {
                     if (reaction.message.id === message.embeds[0]?.data?.footer?.text) {

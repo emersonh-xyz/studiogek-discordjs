@@ -34,7 +34,7 @@ module.exports = {
 
         }
 
-        if (reaction._emoji.name === "💀" && reaction.count >= 1 && reaction.message.channelId != process.env.SKULLBOARD_CHANNEL_ID) {
+        if (reaction._emoji.name === "💀" && reaction.count >= 6 && reaction.message.channelId != process.env.SKULLBOARD_CHANNEL_ID) {
             console.log("test");
             await channel.messages.fetch({ limit: 100 }).then(messages => {
                 messages.forEach(message => {

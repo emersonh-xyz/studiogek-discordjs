@@ -17,7 +17,7 @@ for (const file of commandFiles) {
 }
 
 // Construct and prepare an instance of the REST module
-const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
 // and deploy your commands!
 (async () => {

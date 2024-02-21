@@ -33,6 +33,9 @@ module.exports = {
             title = `💀💀💀💀 ${reaction.count}`
 
         }
+        
+        // Check if the message was sent within the last 14 days. If not, return. Justice for GalaxyCat.
+        if (reaction.message.createdTimestamp < new Date().setDate(new Date().getDate() - 14)) return;
 
         if (reaction._emoji.name === "💀" && reaction.count >= 6 && reaction.message.channelId != process.env.SKULLBOARD_CHANNEL_ID) {
             console.log("test");

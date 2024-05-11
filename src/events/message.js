@@ -1,36 +1,39 @@
-// const { Events } = require('discord.js');
+const { Events } = require('discord.js');
+const { guildId } = process.env
+// import the number from the numbers file
+const fs = require('fs')
 
-// const { guildId } = process.env
+module.exports = {
+    name: "messageCreate",
+    async execute(message) {
 
-// module.exports = {
-//     name: "messageCreate",
-//     async execute(message) {
+        try {
+            if (message.author.bot) return;
+            if (message.channel.id !== process.env.COUNTING_CHANNEL_ID) return;
 
-//         if (message.author.bot) return;
+            const client = await message.client
+            const channel = await client.channels.fetch(process.env.COUNTING_CHANNEL_ID).catch((e) => console.error(e))
+
+            const number = JSON.parse(fs.readFileSync(`${__dirname}/../json/number.json`)).number;
+            const nextNumber = number + 1;
+
+            if (parseInt(message.content) === nextNumber) {
+                // Update the number in the json file
+                fs.writeFileSync(`${__dirname}/../json/number.json`, JSON.stringify({ number: nextNumber }));
+            } else {
+                message.delete();
+                const member = await message.guild.members.fetch(message.author.id);
+                member.kick('You broke the counting game!')
+                    .then(() => {
+                        channel.send(`**${message.author.tag}** doesn't know how to count! They have been kicked from the server.`);
+                    })
+                    .catch(console.error);
+            }
+
+        } catch (e) {
+            console.error(e)
+        }
 
 
-//         // skullChannel.send(message);
-//         // message.channel.send('hi');
-//         const guild = await message.client.guilds.cache.get(guildId);
-
-//         const channel = await guild.channels.fetch("1163842054850347081")
-
-//         const collectorFilter = (reaction) => {
-//             return ['💀'].includes(reaction.emoji.name);
-//         };
-
-//         message.awaitReactions({ filter: collectorFilter, max: 1, time: 300000, errors: ['time'] })
-//             .then(collected => {
-//                 const reaction = collected.first();
-//                 connsole.log(collected);
-
-//                 if (reaction.emoji.name === '💀') {
-//                     channel.send(`${message.author.username} reacted with [💀] on <#${message.id}>`);
-//                     ch
-//                 }
-//             })
-//         // message.react('💀')
-
-//         // await channel.send(message.author.username)
-//     }
-// };
+    }
+}

@@ -2,3 +2,5 @@
 src/json/video.json
 src/json/video.json
 .DS_Store
+.env
+.env

@@ -1,7 +1,8 @@
-require("dotenv").config({ path: "./.env" });
+const path = require('path')
 const { Client, Collection, GatewayIntentBits, Partials, Events } = require("discord.js");
-const path = require("path")
 const fs = require("fs")
+require("dotenv").config({ path: path.resolve(__dirname, '../.env') });
+
 
 // Load our Discord Intents
 const { Guilds, GuildMembers, GuildMessages, GuildMessageReactions, MessageContent, } = GatewayIntentBits;

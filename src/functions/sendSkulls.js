@@ -30,7 +30,7 @@ module.exports = (client) => {
             }
         }
 
-        if(max >= 7) {
+        if (max >= 7) {
             const user = await client.users.fetch(id)
             const member = await guild.members.fetch(id);
 
@@ -60,6 +60,7 @@ module.exports = (client) => {
 
             await channel.send({ embeds: [embed] });
             client.user.setPresence({ activities: [{ name: `💀👑 Nobody`, type: ActivityType.Watching }], status: 'online' });
+            oldKing.roles.remove(role)
             fs.writeFileSync(`${__dirname}/../json/skulls.json`, JSON.stringify([{}]));
         }
     }

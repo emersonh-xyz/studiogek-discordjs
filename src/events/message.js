@@ -14,6 +14,13 @@ module.exports = {
             const client = await message.client
             const channel = await client.channels.fetch(process.env.COUNTING_CHANNEL_ID).catch((e) => console.error(e))
 
+            const previousMessage = await channel.messages.fetch({ limit: 2 }).then(messages => messages.last())
+
+            if (previousMessage.author.id === message.author.id) {
+                message.delete();
+                return;
+            }
+
             const number = JSON.parse(fs.readFileSync(`${__dirname}/../json/number.json`)).number;
             const nextNumber = number + 1;
 
